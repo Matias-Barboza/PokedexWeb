@@ -43,8 +43,13 @@
   <ItemGroup>
     <Compile Include="PokemonNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TipoNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PokedexAccesoDatos\PokedexAccesoDatos.csproj">
+      <Project>{fc0cd9d1-d3ac-481e-ae19-18df1eba1766}</Project>
+      <Name>PokedexAccesoDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokedexCapaDominio\PokedexCapaDominio.csproj">
       <Project>{2ec6d66c-92a5-4593-b9a6-dbbb6a4f62ac}</Project>
       <Name>PokedexCapaDominio</Name>

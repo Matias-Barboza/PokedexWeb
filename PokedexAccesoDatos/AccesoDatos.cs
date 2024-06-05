@@ -22,5 +22,56 @@ namespace PokedexAccesoDatos
             comando = new SqlCommand();
             comando.Connection = Conexion;
         }
+
+        public void SetearQuery(string consulta) 
+        {
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
+        }
+
+        public void SetearStoredProcedure(string procedimientoAlmacenado) 
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = procedimientoAlmacenado;
+        }
+
+        public void AgregarParametro(string nombre, object valor) 
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void EjecutarLector() 
+        {
+            try
+            {
+                Conexion.Open();
+                reader = comando.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void EjecutarAccion() 
+        {
+            try
+            {
+                Conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void CerrarConexion() 
+        {
+            if(Conexion != null) 
+            {
+                Conexion.Close();
+            }
+        }
     }
 }
