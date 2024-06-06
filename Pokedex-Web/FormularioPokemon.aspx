@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="col-8">
-            <asp:Button ID="AgregarButton" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="AgregarButton_Click"/>
+            <asp:Button ID="AgregarButton" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="AgregarButton_Click"/>
             <a href="ListadoPokemons.aspx">Cancelar</a>
         </div>
     </div>

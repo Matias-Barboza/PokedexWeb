@@ -12,15 +12,12 @@ namespace Pokedex_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                PokemonNegocio negocio = new PokemonNegocio();
+            PokemonNegocio negocio = new PokemonNegocio();
 
-                Session.Add("listaPokemons", negocio.ListarConSP());
+            Session.Add("listaPokemons", negocio.ListarConSP());
 
-                GridViewPokemons.DataSource = Session["listaPokemons"];
-                GridViewPokemons.DataBind();
-            }
+            GridViewPokemons.DataSource = Session["listaPokemons"];
+            GridViewPokemons.DataBind();
         }
 
         protected void GridViewPokemons_SelectedIndexChanged(object sender, EventArgs e)
@@ -32,7 +29,6 @@ namespace Pokedex_Web
         protected void GridViewPokemons_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewPokemons.PageIndex = e.NewPageIndex;
-            GridViewPokemons.DataSource = Session["listaPokemons"];
             GridViewPokemons.DataBind();
         }
     }
