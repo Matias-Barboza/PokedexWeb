@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace PokedexCapaDominio
 {
-    public class Tipo
+    public class Elemento
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
 
-        public Tipo() { }
+        public Elemento() { }
 
-        public Tipo(int id, string descripcion)
+        public Elemento(int id, string descripcion)
         {
             Id = id;
             Descripcion = descripcion;

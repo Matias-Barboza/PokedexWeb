@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace PokedexCapaNegocio
 {
-    public class TipoNegocio
+    public class ElementoNegocio
     {
-        public List<Tipo> listarTipos() 
+        public List<Elemento> listarElementos() 
         {
-            List<Tipo> listaTipos = new List<Tipo>();
+            List<Elemento> listaElementos = new List<Elemento>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearQuery("SELECT id, descripcion FROM tipos");
+                datos.SetearQuery("SELECT id, descripcion FROM elementos");
                 datos.EjecutarLector();
 
                 while(datos.Reader.Read()) 
                 {
-                    Tipo tipo = new Tipo();
+                    Elemento elemento = new Elemento();
 
-                    tipo.Id = (int) datos.Reader["id"];
-                    tipo.Descripcion = (string) datos.Reader["descripcion"];
+                    elemento.Id = (int) datos.Reader["id"];
+                    elemento.Descripcion = (string) datos.Reader["descripcion"];
 
-                    listaTipos.Add(tipo);
+                    listaElementos.Add(elemento);
                 }
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace PokedexCapaNegocio
                 datos = null;
             }
 
-            return listaTipos;
+            return listaElementos;
         }
     }
 }

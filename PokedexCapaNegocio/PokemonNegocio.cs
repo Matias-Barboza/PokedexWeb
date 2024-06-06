@@ -29,15 +29,16 @@ namespace PokedexCapaNegocio
                     pokemon.Nombre = (string) datos.Reader["nombre"];
                     pokemon.Descripcion = (string) datos.Reader["Descripcion Pokemon"];
 
-                    // Datos de Tipo
-                    pokemon.Tipo = new Tipo();
+                    // Datos de Elemento
+                    pokemon.Tipo = new Elemento();
                     pokemon.Tipo.Id = (int) datos.Reader["id_tipo"];
                     pokemon.Tipo.Descripcion = (string) datos.Reader["descripcion"];
                     pokemon.UrlImagen = (string) datos.Reader["url_imagen"];
 
                     if (!Convert.IsDBNull(datos.Reader["id_evol"]))
                     {
-                        pokemon.Evolucion.Id = (int)datos.Reader["id_evol"];
+                        pokemon.Evolucion = new Pokemon();
+                        pokemon.Evolucion.Id = (int) datos.Reader["id_evol"];
                         pokemon.Evolucion.Nombre = (string)datos.Reader["nombre_evol"];
                     }
 
@@ -55,6 +56,34 @@ namespace PokedexCapaNegocio
             }
 
             return listaPokemons;
+        }
+
+        public void Agregar(Pokemon pokemon) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearStoredProcedure("spAltaPokemon");
+
+                datos.AgregarParametro("nombre", pokemon.Nombre);
+                datos.AgregarParametro("id_tipo", pokemon.Tipo.Id);
+                datos.AgregarParametro("id_evolucion", pokemon.Evolucion.Id);
+                datos.AgregarParametro("descripcion", pokemon.Descripcion);
+                datos.AgregarParametro("url_imagen", pokemon.UrlImagen);
+                datos.AgregarParametro("id_debilidad", pokemon.TipoDebilidad.Id);
+
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.CerrarConexion();
+                datos = null;
+            }
         }
     }
 }
