@@ -11,13 +11,15 @@ namespace Pokedex_Web
 {
     public partial class FormularioPokemon : System.Web.UI.Page
     {
+        public bool ConfirmaEliminacion { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             IdTextBox.Enabled = false;
+            ConfirmaEliminacion = false;
 
             try
             {
-
                 // Configuración inicial
                 if (!IsPostBack)
                 {
@@ -38,9 +40,13 @@ namespace Pokedex_Web
                 // Configuración si viene para modificación
                 if (Request.QueryString["id"] != null && !IsPostBack)
                 {
+                    EliminarButton.Visible = true;
+                    InactivarButton.Visible = true;
+
                     PokemonNegocio negocio = new PokemonNegocio();
 
                     Pokemon pokemonSeleccionado = negocio.ObtenerPorId(Convert.ToInt32(Request.QueryString["id"]));
+                    Session.Add("pokemonSeleccionado", pokemonSeleccionado);
 
                     IdTextBox.Text = pokemonSeleccionado.Id.ToString();
                     NombreTextBox.Text = pokemonSeleccionado.Nombre.ToString();
@@ -51,6 +57,11 @@ namespace Pokedex_Web
                     UrlImagenTextBox.Text = pokemonSeleccionado.UrlImagen;
 
                     UrlImagenTextBox_TextChanged(sender, e);
+
+                    if (!pokemonSeleccionado.Activo)
+                    {
+                        InactivarButton.Text = "Reactivar";
+                    }
                 }
             }
             catch (Exception ex)
@@ -96,8 +107,57 @@ namespace Pokedex_Web
             }
             catch (Exception ex)
             {
-                Session.Add("errorAgregar", ex);
+                Session.Add("errorAgregarModificar", ex);
                 throw ex;
+            }
+        }
+
+        protected void EliminarButton_Click(object sender, EventArgs e)
+        {
+            ConfirmaEliminacion = true;
+        }
+
+        protected void ConfirmarEliminarButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (EliminarCheckBox.Checked)
+                {
+                    PokemonNegocio negocio = new PokemonNegocio();
+                    negocio.Eliminar(int.Parse(IdTextBox.Text));
+
+                    Response.Redirect("ListadoPokemons.aspx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("errorEliminar", ex);
+                throw ex;
+            }
+        }
+
+        protected void InactivarButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PokemonNegocio negocio = new PokemonNegocio();
+                Pokemon pokemon = (Pokemon)Session["pokemonSeleccionado"];
+
+                if (pokemon.Activo)
+                {
+                    negocio.Inactivar(pokemon.Id);
+                }
+                else
+                {
+                    negocio.Reactivar(pokemon.Id);
+                }
+
+                Response.Redirect("ListadoPokemons.aspx");
+            }
+            catch (Exception ex)
+            {
+                Session.Add("errorInactivar", ex);
+                throw;
             }
         }
     }

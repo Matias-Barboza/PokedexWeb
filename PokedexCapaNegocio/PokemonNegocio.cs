@@ -29,6 +29,7 @@ namespace PokedexCapaNegocio
                     pokemon.Nombre = (string)datos.Reader["nombre"];
                     pokemon.Numero = datos.Reader.IsDBNull(8) ? 0 : (int)datos.Reader["numero"];
                     pokemon.Descripcion = (string)datos.Reader["Descripcion Pokemon"];
+                    pokemon.Activo = (bool)datos.Reader["activo"];
 
                     // Datos de Elemento
                     pokemon.Tipo = new Elemento();
@@ -118,6 +119,72 @@ namespace PokedexCapaNegocio
             }
         }
 
+        public void Eliminar(int id) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearStoredProcedure("spEliminarFisico");
+                datos.AgregarParametro("id", id);
+
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.CerrarConexion();
+                datos = null;
+            }
+        }
+
+        public void Inactivar(int id) 
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearStoredProcedure("spEliminarLogico");
+                datos.AgregarParametro("id", id);
+
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.CerrarConexion();
+                datos = null;
+            }
+        }
+
+        public void Reactivar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearStoredProcedure("spActivarLogico");
+                datos.AgregarParametro("id", id);
+
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+                datos = null;
+            }
+        }
+
         public Pokemon ObtenerPorId(int id)
         {
             Pokemon pokemonRecuperado = null;
@@ -125,7 +192,7 @@ namespace PokedexCapaNegocio
 
             try
             {
-                datos.SetearQuery(@"SELECT id, nombre, numero, id_tipo, id_evolucion, descripcion, url_imagen, id_debilidad
+                datos.SetearQuery(@"SELECT id, nombre, numero, id_tipo, id_evolucion, descripcion, url_imagen, id_debilidad, activo
                                 FROM pokemons
                                 WHERE id = @id_buscado");
 
@@ -152,6 +219,8 @@ namespace PokedexCapaNegocio
 
                     pokemonRecuperado.TipoDebilidad = new Elemento();
                     pokemonRecuperado.TipoDebilidad.Id = datos.Reader.IsDBNull(7) ? 0 : (int)datos.Reader["id_debilidad"];
+
+                    pokemonRecuperado.Activo = (bool) datos.Reader["activo"];
                 }
             }
             catch (Exception ex)
@@ -165,6 +234,114 @@ namespace PokedexCapaNegocio
             }
 
             return pokemonRecuperado;
+        }
+
+        public List<Pokemon> Filtrar(string campo, string criterio, string filtro, string estado) 
+        {
+            List<Pokemon> listaFiltrada = new List<Pokemon>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = @"SELECT numero, nombre, p.descripcion, url_imagen,
+                                           e.descripcion tipo, d.descripcion debilidad, p.id_tipo,
+                                           p.id_debilidad, p.id, p.activo
+                                    FROM pokemons p
+                                    INNER JOIN elementos e ON p.id_tipo = e.id
+                                    INNER JOIN elementos d ON p.id_debilidad = d.id
+                                    WHERE ";
+
+                if (campo == "Número") 
+                {
+                    switch(criterio) 
+                    {
+                        case "Mayor a":
+                            consulta += "numero >" + filtro;
+                            break;
+                        case "Menor a":
+                            consulta += "numero <" + filtro;
+                            break;
+                        default:
+                            consulta += "numero =" + filtro;
+                            break;
+                    }
+                }
+                else if (campo == "Nombre") 
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += "nombre like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += "nombre like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += "nombre like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+                else 
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += "e.descripcion like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += "e.desripcion like '%" + filtro + "'";
+                            break;
+                        default:
+                            consulta += "e.descripcion like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+
+                if (estado == "Activo") 
+                {
+                    consulta += "AND p.activo = 1";
+                }
+                else if (estado == "Inactivo") 
+                {
+                    consulta += "AND p.activo = 0";
+                }
+
+                datos.SetearQuery(consulta);
+                datos.EjecutarLector();
+
+                while(datos.Reader.Read()) 
+                {
+                    Pokemon pokemon = new Pokemon();
+
+                    pokemon.Id = (int) datos.Reader["id"];
+                    pokemon.Nombre = (string) datos.Reader["nombre"];
+                    pokemon.Numero = datos.Reader.IsDBNull(0) ? 0 : (int) datos.Reader["numero"];
+                    pokemon.Descripcion = (string) datos.Reader["descripcion"];
+                    pokemon.UrlImagen = (string) datos.Reader["url_imagen"];
+
+                    pokemon.Tipo = new Elemento();
+                    pokemon.Tipo.Id = (int) datos.Reader["id_tipo"];
+                    pokemon.Tipo.Descripcion = (string)datos.Reader["tipo"];
+
+                    pokemon.TipoDebilidad = new Elemento();
+                    pokemon.TipoDebilidad.Id = datos.Reader.IsDBNull(7) ? 0 : (int)datos.Reader["id_debilidad"];
+                    pokemon.TipoDebilidad.Descripcion = (string) datos.Reader["debilidad"];
+                    pokemon.Activo = (bool) datos.Reader["activo"];
+
+                    listaFiltrada.Add(pokemon);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            {
+                datos.CerrarConexion();
+                datos = null;
+            }
+
+            return listaFiltrada;
         }
     }
 }

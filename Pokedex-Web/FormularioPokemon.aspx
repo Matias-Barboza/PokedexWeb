@@ -47,15 +47,31 @@
                             <asp:TextBox ID="UrlImagenTextBox" runat="server" CssClass="form-control" OnTextChanged="UrlImagenTextBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                         </div>
                         <div class="mb-3">
-                            <asp:Image Width="70%" ID="ImagePokemon" ImageUrl="https://www.came-educativa.com.ar/upsoazej/2022/03/placeholder-4.png" runat="server"/>
+                            <asp:Image Width="70%" ID="ImagePokemon" ImageUrl="https://www.came-educativa.com.ar/upsoazej/2022/03/placeholder-4.png" runat="server" />
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="col-8">
-            <asp:Button ID="AgregarButton" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="AgregarButton_Click"/>
-            <a href="ListadoPokemons.aspx">Cancelar</a>
-        </div>
+
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+
+                <div class="col-8">
+                    <asp:Button ID="AgregarButton" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="AgregarButton_Click" />
+                    <asp:Button ID="InactivarButton" runat="server" Text="Inactivar" CssClass="btn btn-warning" OnClick="InactivarButton_Click" Visible="false"/>
+                    <asp:Button ID="EliminarButton" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="EliminarButton_Click" Visible="false"/>
+                    <a href="ListadoPokemons.aspx">Cancelar</a>
+                </div>
+                <%if (ConfirmaEliminacion)
+                    {%>
+                    <div class="col-8">
+                        <asp:CheckBox ID="EliminarCheckBox" runat="server" Text="Confirmar eliminación" />
+                        <asp:Button ID="ConfirmarEliminarButton" runat="server" Text="Confirmar eliminación" CssClass="btn btn-outline-danger" OnClick="ConfirmarEliminarButton_Click" />
+                    </div>
+                <%} %>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
 </asp:Content>
