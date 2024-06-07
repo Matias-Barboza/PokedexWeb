@@ -88,8 +88,8 @@ namespace Pokedex_Web
             }
             catch (Exception ex)
             {
-                Session.Add("errorBuscar", ex);
-                throw;
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx");
             }
         }
     }
