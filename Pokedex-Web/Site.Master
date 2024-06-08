@@ -16,28 +16,62 @@
 
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid justify-content-center">
-                <div class="col-8">
+                <div class="col-2">
                     <span class="navbar-brand mb-0 h1">POKEDEX</span>
-
+                </div>
+                <div class="col-8">
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="Default.aspx">Pokemons cards</a>
                         </li>
+                        <%--<%if (Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
+                            { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Favoritos.aspx">Favoritos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="MiPerfil.aspx">Mi perfil</a>
+                        </li>
+                        <%} %>--%>
+                        <%if (Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
+                          { %>
+                        <%if (PokedexCapaNegocio.Seguridad.EsAdmin(this.Session["trainee"]))
+                          {%>
                         <li class="nav-item">
                             <a class="nav-link" href="ListadoPokemons.aspx">Lista Pokemons</a>
                         </li>
-                        <%if (!Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
-                            { %>
+                        <%}%>
                         <li class="nav-item">
-                            <a class="nav-link" href="Login.aspx">Login</a>
+                            <a class="nav-link" href="MisFavoritos.aspx">Mis favoritos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="MiPerfil.aspx">Mi perfil</a>
                         </li>
                         <%} %>
                     </ul>
 
+                </div>
+                <div class="col-2">
+                    <%--<%if (Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
+                        {%>
+                    <asp:Button Text="Cerrar sesión" runat="server" OnClick="CerrarSesionButton_Click" ID="CerrarSesionButton" CssClass="btn btn-primary" />
+                    <asp:Image runat="server" CssClass="img-fluid" style="width: 50px; height:50px; border-radius: 50%; margin-left: 10px"/>
+                    <%}
+                      else
+                      {%>
+                    <a href="LoginTrainee.aspx" class="btn btn-success">Login</a>
+                    <a href="FormularioRegistro.aspx" class="btn btn-primary">Registrarse</a>
+                    <%} %>--%>
                     <%if (Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
                         {%>
                     <asp:Button Text="Cerrar sesión" runat="server" OnClick="CerrarSesionButton_Click" ID="CerrarSesionButton" CssClass="btn btn-primary" />
-                    <%}%>
+                    <asp:Image runat="server" CssClass="img-fluid" Style="width: 50px; height: 50px; border-radius: 50%; margin-left: 10px" />
+                    <%}
+                        else
+                        {%>
+                    <a href="LoginTrainee.aspx" class="btn btn-success">Login</a>
+                    <a href="FormularioRegistro.aspx" class="btn btn-primary">Registrarse</a>
+                    <%} %>
                 </div>
             </div>
         </nav>

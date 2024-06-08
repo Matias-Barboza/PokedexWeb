@@ -15,6 +15,12 @@ namespace Pokedex_Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.EsAdmin(Session["trainee"])) 
+            {
+                Session.Add("error", "Ups! Debes ser admin para estar aquí.");
+                Response.Redirect("Error.aspx");
+            }
+
             PokemonNegocio negocio = new PokemonNegocio();
 
             Session.Add("listaPokemons", negocio.ListarConSP());

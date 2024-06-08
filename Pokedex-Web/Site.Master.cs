@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokedexCapaNegocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,17 +12,33 @@ namespace Pokedex_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (LoginHelper.PaginaActualNecesitaLogin(Page)) 
+            {
+                if (!Seguridad.SessionActiva(Session["trainee"])) 
+                {
+                    Response.Redirect("Login.aspx");
+                }
+            }
         }
 
         protected void CerrarSesionButton_Click(object sender, EventArgs e)
         {
-            Session.Remove("usuario");
+            //Session.Remove("usuario");
 
-            if (Request.Url.AbsolutePath == "/MenuLogin.aspx" || Session["usuario"] == null) 
+            //if (Request.Url.AbsolutePath == "/MenuLogin.aspx" || Session["usuario"] == null) 
+            //{
+            //    Session.Add("error", "Ups! Debes estar logueado para estar aquí.");
+            //    Response.Redirect("Error.aspx");
+            //}
+
+            Session.Remove("trainee");
+
+            if (LoginHelper.PaginaActualNecesitaLogin(Page))
             {
-                Session.Add("error", "Ups! Debes estar logueado para estar aquí.");
-                Response.Redirect("Error.aspx");
+                if (!Seguridad.SessionActiva(Session["trainee"]))
+                {
+                    Response.Redirect("Login.aspx");
+                }
             }
         }
     }

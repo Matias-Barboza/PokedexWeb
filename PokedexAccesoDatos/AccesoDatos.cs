@@ -66,6 +66,19 @@ namespace PokedexAccesoDatos
             }
         }
 
+        public int EjecutarAccionScalar() 
+        {
+            try
+            {
+                Conexion.Open();
+                return (int) comando.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void CerrarConexion() 
         {
             if(Conexion != null) 

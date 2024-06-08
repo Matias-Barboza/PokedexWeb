@@ -7,6 +7,7 @@
 
     <div class="container">
         <div class="row">
+            <h2>Loguearse</h2>
             <div class="col-8">
                 <div class="col-8 mb-3">
                     <asp:Label Text="Usuario" runat="server" CssClass="form-label"/>
@@ -18,6 +19,7 @@
                 </div>
                 <div class="col-8 mb-3 justify-content-center">
                     <asp:Button Text="Ingresar" runat="server" CssClass="btn btn-primary" OnClick="IngresarButton_Click" ID="IngresarButton"/>
+                    <a href="Default.aspx">Cancelar</a>
                 </div>
             </div>
         </div>
