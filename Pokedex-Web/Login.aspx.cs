@@ -14,7 +14,7 @@ namespace Pokedex_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+       
         }
 
         protected void IngresarButton_Click(object sender, EventArgs e)
@@ -31,11 +31,11 @@ namespace Pokedex_Web
                 {
                     Session.Add("usuario", usuario);
 
-                    Response.Redirect("", false);
+                    Response.Redirect("MenuLogin.aspx", false);
                 }
                 else 
                 {
-                    Session.Add("error", "Usuario o Contraseña incorrecta");
+                    Session.Add("error", "Usuario o Contraseña incorrecta.");
 
                     Response.Redirect("Error.aspx", false);
                 }

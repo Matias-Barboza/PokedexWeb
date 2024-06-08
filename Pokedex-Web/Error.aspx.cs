@@ -11,10 +11,12 @@ namespace Pokedex_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["error"] != null) 
+            if (Session["error"] == null) 
             {
-                MensajeErrorLabel.Text = Session["error"].ToString();
+                Response.Redirect("Default.aspx");
             }
+            
+            MensajeErrorLabel.Text = Session["error"].ToString();
         }
     }
 }

@@ -26,10 +26,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="ListadoPokemons.aspx">Lista Pokemons</a>
                         </li>
+                        <%if (!Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
+                            { %>
                         <li class="nav-item">
                             <a class="nav-link" href="Login.aspx">Login</a>
                         </li>
+                        <%} %>
                     </ul>
+
+                    <%if (Pokedex_Web.LoginHelper.ExisteUsuarioLogueado(this.Session))
+                        {%>
+                    <asp:Button Text="Cerrar sesión" runat="server" OnClick="CerrarSesionButton_Click" ID="CerrarSesionButton" CssClass="btn btn-primary" />
+                    <%}%>
                 </div>
             </div>
         </nav>

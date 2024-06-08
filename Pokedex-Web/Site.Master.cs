@@ -13,5 +13,16 @@ namespace Pokedex_Web
         {
 
         }
+
+        protected void CerrarSesionButton_Click(object sender, EventArgs e)
+        {
+            Session.Remove("usuario");
+
+            if (Request.Url.AbsolutePath == "/MenuLogin.aspx" || Session["usuario"] == null) 
+            {
+                Session.Add("error", "Ups! Debes estar logueado para estar aquí.");
+                Response.Redirect("Error.aspx");
+            }
+        }
     }
 }

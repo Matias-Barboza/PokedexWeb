@@ -11,43 +11,43 @@ namespace Pokedex_Web
 {
 
 
-    public partial class Site
+    public partial class FormularioMail
     {
 
         /// <summary>
-        /// Control head.
+        /// Control DestinatarioTextBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.TextBox DestinatarioTextBox;
 
         /// <summary>
-        /// Control form1.
+        /// Control AsuntoTextBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox AsuntoTextBox;
 
         /// <summary>
-        /// Control CerrarSesionButton.
+        /// Control MensajeTextBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CerrarSesionButton;
+        protected global::System.Web.UI.WebControls.TextBox MensajeTextBox;
 
         /// <summary>
-        /// Control ContentPlaceHolder1.
+        /// Control EnviarMailButton.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Button EnviarMailButton;
     }
 }
