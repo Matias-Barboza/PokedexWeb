@@ -1,10 +1,12 @@
-﻿using PokedexCapaNegocio;
+﻿using PokedexCapaDominio;
+using PokedexCapaNegocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static System.Net.WebRequestMethods;
 
 namespace Pokedex_Web
 {
@@ -12,27 +14,6 @@ namespace Pokedex_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LoginHelper.PaginaActualNecesitaLogin(Page)) 
-            {
-                if (!Seguridad.SessionActiva(Session["trainee"])) 
-                {
-                    Response.Redirect("Login.aspx");
-                }
-            }
-        }
-
-        protected void CerrarSesionButton_Click(object sender, EventArgs e)
-        {
-            //Session.Remove("usuario");
-
-            //if (Request.Url.AbsolutePath == "/MenuLogin.aspx" || Session["usuario"] == null) 
-            //{
-            //    Session.Add("error", "Ups! Debes estar logueado para estar aquí.");
-            //    Response.Redirect("Error.aspx");
-            //}
-
-            Session.Remove("trainee");
-
             if (LoginHelper.PaginaActualNecesitaLogin(Page))
             {
                 if (!Seguridad.SessionActiva(Session["trainee"]))
@@ -40,6 +21,17 @@ namespace Pokedex_Web
                     Response.Redirect("Login.aspx");
                 }
             }
+
+            if (Seguridad.SessionActiva(Session["trainee"]))
+            {
+                ImagenPerfilActual.ImageUrl = ((Trainee)Session["trainee"]).ImagenPerfil != null ?  "~/Images/" + ((Trainee)Session["trainee"]).ImagenPerfil : "https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Clipart.png" ;
+            }
+        }
+
+        protected void CerrarSesionButton_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("LoginTrainee.aspx");
         }
     }
 }

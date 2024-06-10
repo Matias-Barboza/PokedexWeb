@@ -27,7 +27,9 @@ namespace Pokedex_Web
                 user.Email = EmailTextBox.Text;
                 user.Pass = PassTextBox.Text;
 
-                int idNuevo = negocio.InsertarNuevo(user);
+                user.Id = negocio.InsertarNuevo(user);
+
+                Session.Add("trainee", user);
 
                 emailService.ArmarCorreoBienvenida(user.Email);
                 emailService.EnviarMail();
