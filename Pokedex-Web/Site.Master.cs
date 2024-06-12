@@ -24,7 +24,7 @@ namespace Pokedex_Web
 
             if (Seguridad.SessionActiva(Session["trainee"]))
             {
-                ImagenPerfilActual.ImageUrl = ((Trainee)Session["trainee"]).ImagenPerfil != null ?  "~/Images/" + ((Trainee)Session["trainee"]).ImagenPerfil : "https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Clipart.png" ;
+                ImagenPerfilActual.ImageUrl = !string.IsNullOrEmpty(((Trainee)Session["trainee"]).ImagenPerfil) ?  "~/Images/" + ((Trainee)Session["trainee"]).ImagenPerfil : "https://www.pngmart.com/files/21/Account-Avatar-Profile-PNG-Clipart.png" ;
             }
         }
 
