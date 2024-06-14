@@ -16,14 +16,26 @@
                 <div class="col-8 mb-3">
                     <asp:Label Text="Nombre" runat="server" CssClass="form-label" />
                     <asp:TextBox runat="server" CssClass="form-control" ID="NombreTextBox" />
+                    <asp:RequiredFieldValidator ErrorMessage="El nombre es requerido." ControlToValidate="NombreTextBox" runat="server" CssClass="form-text"/>
                 </div>
                 <div class="col-8 mb-3">
                     <asp:Label Text="Apellido" runat="server" CssClass="form-label" />
                     <asp:TextBox runat="server" CssClass="form-control" ID="ApellidoTextBox" />
+                    <asp:RequiredFieldValidator ErrorMessage="El apellido es requerido." ControlToValidate="ApellidoTextBox" runat="server" CssClass="form-text"/>
+                    <%-- Este validador como su tipo lo indica es para un integer, pero si trabaja con un Regex puede ser mas potente --%>
+                    <%--<asp:RangeValidator ErrorMessage="Fuera de rango..." ControlToValidate="ApellidoTextBox" runat="server" CssClass="form-text"
+                                        Type="Integer" MinimumValue="1" MaximumValue="256"/>--%>
+                    <%--<asp:RegularExpressionValidator ErrorMessage="El campo solo puede contener números." ControlToValidate="ApellidoTextBox" runat="server" CssClass="form-text"
+                                                    ValidationExpression="^[0-9]+$"/>--%>
+                    <%--<asp:RegularExpressionValidator ErrorMessage="El campo debe tener formato de correo electronico." ControlToValidate="ApellidoTextBox"
+                                                    runat="server" CssClass="form-text"
+                                                    ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"/>--%>
                 </div>
                 <div class="col-8 mb-3">
                     <asp:Label Text="Fecha de nacimiento" runat="server" CssClass="form-label" />
                     <asp:TextBox runat="server" TextMode="Date" CssClass="form-control" ID="FechaNacimientoTextBox" />
+                    <asp:RangeValidator ErrorMessage="La fecha debe estar entre 01/01/1900-Hoy" ControlToValidate="FechaNacimientoTextBox" runat="server"
+                                        MinimumValue="1900/01/01" MaximumValue="2024/01/01" CssClass="form-text"/>
                 </div>
             </div>
             <div class="col-5">
