@@ -5,6 +5,21 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <script>
+        function validar()
+        {
+            const apellidoTextBox = document.getElementById("ApellidoTextBox");
+
+            if (apellidoTextBox.value == "")
+            {
+                alert("Debe cargar el apellido.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
     <div class="container">
         <div class="row">
             <h2>Mi perfil</h2>
@@ -20,7 +35,7 @@
                 </div>
                 <div class="col-8 mb-3">
                     <asp:Label Text="Apellido" runat="server" CssClass="form-label" />
-                    <asp:TextBox runat="server" CssClass="form-control" ID="ApellidoTextBox" />
+                    <asp:TextBox runat="server" CssClass="form-control" ID="ApellidoTextBox" ClientIDMode="Static"/>
                     <asp:RequiredFieldValidator ErrorMessage="El apellido es requerido." ControlToValidate="ApellidoTextBox" runat="server" CssClass="form-text"/>
                     <%-- Este validador como su tipo lo indica es para un integer, pero si trabaja con un Regex puede ser mas potente --%>
                     <%--<asp:RangeValidator ErrorMessage="Fuera de rango..." ControlToValidate="ApellidoTextBox" runat="server" CssClass="form-text"
@@ -50,7 +65,7 @@
         </div>
         <div class="row">
             <div class="col-5">
-                <asp:Button Text="Guardar" runat="server" CssClass="btn btn-primary" ID="GuardarButton" OnClick="GuardarButton_Click"/>
+                <asp:Button Text="Guardar" runat="server" CssClass="btn btn-primary" ID="GuardarButton" OnClick="GuardarButton_Click" OnClientClick="return validar()"/>
                 <a href="Default.aspx">Regresar al inicio</a>
             </div>
         </div>
