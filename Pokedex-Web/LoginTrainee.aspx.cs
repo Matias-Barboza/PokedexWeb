@@ -21,6 +21,18 @@ namespace Pokedex_Web
             Trainee trainee = new Trainee();
             TraineeNegocio negocio = new TraineeNegocio();
 
+            //if (string.IsNullOrEmpty(EmailTextBox.Text) || string.IsNullOrEmpty(PassTextBox.Text)) 
+            //{
+            //    Session.Add("error", "Los campos no pueden estar vacíos.");
+            //    Response.Redirect("Error.aspx");
+            //}
+            
+            if (Validacion.ControlTieneTextoVacio(EmailTextBox) || Validacion.ControlTieneTextoVacio(PassTextBox)) 
+            {
+                Session.Add("error", "Los campos no pueden estar vacíos.");
+                Response.Redirect("Error.aspx");
+            }
+
             try
             {
                 trainee.Email = EmailTextBox.Text;

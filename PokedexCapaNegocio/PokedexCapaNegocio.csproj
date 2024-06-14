@@ -50,6 +50,7 @@
     <Compile Include="Seguridad.cs" />
     <Compile Include="TraineeNegocio.cs" />
     <Compile Include="UsuarioNegocio.cs" />
+    <Compile Include="Validacion.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PokedexAccesoDatos\PokedexAccesoDatos.csproj">
